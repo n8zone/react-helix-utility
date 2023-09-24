@@ -11,12 +11,12 @@ function Home() {
         <p>Helix Web Utility is currently in development and is not ready for use.</p>
       </div>
       <div id="features">
-        <Card>
+        <Card bgColor='bg-slate-100'>
           <h1>Item Generator</h1>
           <p className='text-base'>Easily create items in seconds, fully customizable to fit your needs</p>
           <Button>Begin</Button>
         </Card>
-        <Card>
+        <Card bgColor='bg-slate-100'>
           <h1>Item Generator</h1>
           <p className='text-base'>Generate all the files you need to begin development in seconds with one easy UI</p>
           <Button>Begin</Button>

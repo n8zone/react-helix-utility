@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <div className='bg-gray-800 text-white p-4'>
+    <div className='bg-slate-800 text-white p-4'>
       <NavLink
         to="/"
         end
