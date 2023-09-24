@@ -7,17 +7,20 @@ export function generateItemLua(itemName, itemDesc, itemCategory, itemModel, ite
 	ITEM.category = "${itemCategory}"
   ITEM.model = "${itemModel}"
 
-	function ITEM:GetDescription()
+	function ITEM:GetDescription() -- Returns the description of the item
 	<lua_tab>return self.description
 	end
 
-	ITEM.functions.Use = {
+	ITEM.functions.Use = { -- Item function example
 	<lua_tab>OnRun = function(item)
 	<lua_tab><lua_tab>local client = item.player
-	<lua_tab><lua_tab>client:SetHealth(client:Health() + item.health)
+	<lua_tab><lua_tab>client:SetHealth(client:Health() + 5)
 	<lua_tab><lua_tab>client:ChatPrint("You feel refreshed!")
 	<lua_tab><lua_tab>return true
-	<lua_tab>end
+	<lua_tab>end,
+  <lua_tab>OnCanRun = function(item) -- Returns whether or not the player can use the function
+  <lua_tab><lua_tab>return true
+  <lua_tab>end
 	}
   `;
 

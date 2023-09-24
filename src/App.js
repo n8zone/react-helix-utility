@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ItemGenerator from './pages/ItemGenerator';
 import { useEffect } from 'react';
+import Card from './shared/Card';
 
 function App() {
 	useEffect(() => {
@@ -24,6 +25,14 @@ function App() {
 						</>
 					}
 				></Route>
+        <Route path='/learning-zone' element={
+          <div className='mx-auto flex justify-center'>
+            <Card bgColor={'bg-orange-400'}>
+              <h1 className='text-4xl text-white'>Under Construction!</h1>
+            </Card>
+          </div>
+
+        }></Route>
 			</Routes>
 		</Router>
 	);

@@ -26,6 +26,13 @@ function Navbar() {
         >
         Plugin Generator
       </NavLink>
+      <NavLink
+        to="/learning-zone"
+        end
+        className="mx-2"
+        >
+        Learning Zone
+      </NavLink>
       {/* <NavbarLink destination={'/'} text='Home'/>
       <NavbarLink destination={'/item-generator'} text='Item Generator'/>
       <NavbarLink destination={'/plugin-generator'} text='Plugin Generator'/> */}

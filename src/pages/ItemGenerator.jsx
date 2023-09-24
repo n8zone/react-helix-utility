@@ -60,11 +60,11 @@ function ItemGenerator() {
     <div className='text-white  m-auto h-full flex justify-center items-center flex-col gap-5 bg-slate-400 text-2xl'>
       <div>
       <Card bgColor={'bg-slate-800'}>
-        <form onSubmit={handleItemGeneration} className='flex flex-col gap-2 px-4 py-2'>
-          <InputLabelPair text='Item Name' inputType={'text'} onChange={handleNameChange} />
-          <InputLabelPair text='Item Description' inputType={'text'} onChange={handleDescriptionChange} />
-          <InputLabelPair text='Item Category' inputType={'text'} onChange={handleCategoryChange} />
-          <InputLabelPair text='Item Model' inputType={'text'} onChange={handleModelChange} />
+        <form onSubmit={handleItemGeneration} className='flex flex-col gap-2 px-4 py-2 w-96'>
+          <InputLabelPair text='Name' inputType={'text'} onChange={handleNameChange} />
+          <InputLabelPair text='Description' inputType={'text'} onChange={handleDescriptionChange} />
+          <InputLabelPair text='Category' inputType={'text'} onChange={handleCategoryChange} />
+          <InputLabelPair text='Model' inputType={'text'} onChange={handleModelChange} />
           <Button type='submit'>Generate</Button>
         </form>
       </Card>
@@ -75,6 +75,7 @@ function ItemGenerator() {
         </form>
       </Card>
       </div>
+      <h1 className='mb-0 pb-0'>File Preview : sh_item.lua</h1>
       <LuaPreview>{previewLua}</LuaPreview>
     </div>
   )
