@@ -4,8 +4,11 @@ export function generateRecipeLua(name, desc, category, model, req, results, too
   RECIPE.description = "${desc}"
   RECIPE.model = "${model}"
   RECIPE.category = "${category}"
+
   RECIPE.requirements = {
-    ["water"] = 1
+    ${req.map((item) => {
+      return `<lua_tab>["${item.itemID}"] = ${item.quantity}`
+    }).join(',\n')}
   }
 
   RECIPE.results = {
@@ -15,7 +18,9 @@ export function generateRecipeLua(name, desc, category, model, req, results, too
   }
 
   RECIPE.tools = {
-    "cid"
+    ${tools.map((item) => {
+      return `<lua_tab>"${item.itemID}"`
+    }).join(',\n')}
   }
   `;
 
