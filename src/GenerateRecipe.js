@@ -1,4 +1,4 @@
-export function generateRecipeLua(name, desc, category, model, req, results, tools, id = 'test_recipe') {
+export function generateRecipeLua(name, desc, category, model, req, results, tools, id = 'test_recipe', download = false) {
 
 	let lua = `RECIPE.name = "${name}"
   RECIPE.description = "${desc}"
@@ -25,7 +25,9 @@ export function generateRecipeLua(name, desc, category, model, req, results, too
   `;
 
 	lua = lua.replace(/^[ \t]+/gm, '');
-  //downloadRecipeLua(lua, id)
+  if (download) {
+    downloadRecipeLua(lua, id)
+  }
   return lua
 }
 

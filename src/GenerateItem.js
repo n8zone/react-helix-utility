@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function generateItemLua(itemName, itemDesc, itemCategory, itemModel, itemID = 'test_item') {
+export function generateItemLua(itemName, itemDesc, itemCategory, itemModel, itemID = 'test_item', download = false) {
 
 	let lua = `ITEM.name = "${itemName}"
   ITEM.description = "${itemDesc}"
@@ -25,7 +25,9 @@ export function generateItemLua(itemName, itemDesc, itemCategory, itemModel, ite
   `;
 
 	lua = lua.replace(/^[ \t]+/gm, '');
-  //downloadItemLua(lua, itemID)
+  if (download) {
+		downloadItemLua(lua, itemID)
+	}
   return lua
 }
 

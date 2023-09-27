@@ -39,7 +39,7 @@ function RecipeGenerator() {
 
   const handleRecipeGeneration = () => {
     
-    setPreviewLua(generatePreviewLua(generateRecipeLua("test", "test", "test", "model", ingredients, results, tools)))
+    setPreviewLua(generatePreviewLua(generateRecipeLua("test", "test", "test", "model", ingredients, results, tools, "test", true)))
   }
 
   return (

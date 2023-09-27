@@ -17,30 +17,34 @@ function ItemGenerator() {
   const [itemCategory, setItemCategory] = useState('')
   const [itemModel, setItemModel] = useState('')
 
-  const [previewLua, setPreviewLua] = useState('No Lua Generated!')
+  const [previewLua, setPreviewLua] = useState(generatePreviewLua(generateItemLua('', '', '', '')))
 
   const handleNameChange = (e) => {
     const newValue = e.target.value;
     console.log(newValue)
     setItemName(newValue)
+    setPreviewLua(generatePreviewLua(generateItemLua(newValue, itemDescription, itemCategory, itemModel)))
   }
 
   const handleDescriptionChange = (e) => {
     const newValue = e.target.value;
     console.log(newValue)
     setItemDescription(newValue)
+    setPreviewLua(generatePreviewLua(generateItemLua(itemName, newValue, itemCategory, itemModel)))
   }
 
   const handleCategoryChange = (e) => {
     const newValue = e.target.value;
     console.log(newValue)
     setItemCategory(newValue)
+    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, newValue, itemModel)))
   }
 
   const handleModelChange = (e) => {
     const newValue = e.target.value;
     console.log(newValue)
     setItemModel(newValue)
+    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, itemCategory, newValue)))
   }
 
   const handleItemGeneration = (e) => {
@@ -52,7 +56,7 @@ function ItemGenerator() {
       itemModel,
     }
     
-    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, itemCategory, itemModel)))
+    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, itemCategory, itemModel, itemName, true)))
     console.log(item)
   }
 
