@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ItemGenerator from './pages/ItemGenerator';
+import RecipeGenerator from './pages/RecipeGenerator';
 import { useEffect } from 'react';
 import Card from './shared/Card';
+
 
 function App() {
 	useEffect(() => {
@@ -25,6 +27,9 @@ function App() {
 						</>
 					}
 				></Route>
+				<Route
+					path='/recipe-generator'
+					element={<RecipeGenerator />}></Route>
         <Route path='/learning-zone' element={
           <div className='mx-auto flex justify-center'>
             <Card bgColor={'bg-orange-400'}>
