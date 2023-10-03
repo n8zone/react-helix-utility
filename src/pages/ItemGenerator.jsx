@@ -12,52 +12,97 @@ import { generateItemLua, generatePreviewLua } from '../GenerateItem'
 
 
 function ItemGenerator() {
-  const [itemName, setItemName] = useState('')
-  const [itemDescription, setItemDescription] = useState('')
-  const [itemCategory, setItemCategory] = useState('')
-  const [itemModel, setItemModel] = useState('')
 
-  const [previewLua, setPreviewLua] = useState(generatePreviewLua(generateItemLua('', '', '', '')))
+  const [newVarName, setNewVarName] = useState('')
+  const [newVarType, setNewVarType] = useState('')
+  const [itemVars, setItemVars] = useState([
+    {
+      name: 'name',
+      type: 'string',
+      value: 'blank',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      value: 'Default Description',
+    },
+    {
+      name: 'category',
+      type: 'string',
+      value: 'Helix Web Util',
+    },
+    {
+      name: 'model',
+      type: 'string',
+      value: 'models/props_c17/oildrum001.mdl',
+    },
 
-  const handleNameChange = (e) => {
-    const newValue = e.target.value;
-    console.log(newValue)
-    setItemName(newValue)
-    setPreviewLua(generatePreviewLua(generateItemLua(newValue, itemDescription, itemCategory, itemModel)))
+  ])
+
+  const inputTypes = {
+    'string': 'text',
+    'number': 'number',
+    'boolean': 'checkbox',
+    'color': 'color',
   }
 
-  const handleDescriptionChange = (e) => {
-    const newValue = e.target.value;
-    console.log(newValue)
-    setItemDescription(newValue)
-    setPreviewLua(generatePreviewLua(generateItemLua(itemName, newValue, itemCategory, itemModel)))
-  }
+  const [previewLua, setPreviewLua] = useState(generatePreviewLua(generateItemLua(itemVars, getItemUniqueID())))
 
-  const handleCategoryChange = (e) => {
-    const newValue = e.target.value;
-    console.log(newValue)
-    setItemCategory(newValue)
-    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, newValue, itemModel)))
-  }
-
-  const handleModelChange = (e) => {
-    const newValue = e.target.value;
-    console.log(newValue)
-    setItemModel(newValue)
-    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, itemCategory, newValue)))
-  }
-
-  const handleItemGeneration = (e) => {
+  
+  function handleItemGeneration(e) {
     e.preventDefault()
-    const item = {
-      itemName,
-      itemDescription,
-      itemCategory,
-      itemModel,
+    setPreviewLua(generatePreviewLua(generateItemLua(itemVars, getItemUniqueID())))
+  }
+
+  function handleItemDownload() {
+    generateItemLua(itemVars, getItemUniqueID(), true)
+  }
+
+  function updateItemVar(name, value) {
+    setItemVars(prevItemVars => {
+      return prevItemVars.map(itemVar => 
+        itemVar.name === name 
+          ? { ...itemVar, value: value } 
+          : itemVar
+      )
+    })
+  }
+
+  function getItemVarByName(name) {
+    return itemVars.find(itemVar => itemVar.name === name)
+  }
+
+  const handleVarUpdate = (e) => {
+    e.preventDefault()
+    const newValue = e.target.value
+  }
+
+  const handleNewVarNameChange = (e) => {
+    e.preventDefault()
+    const newValue = e.target.value
+    setNewVarName(newValue)
+  }
+
+  const handleNewVarTypeChange = (e) => {
+    e.preventDefault()
+    const newValue = e.target.value
+    setNewVarType(newValue)
+  }
+
+  const handleNewItemVar = (e) => {
+    e.preventDefault()
+    const newValue = {
+      name: newVarName,
+      type: newVarType,
+      value: '',
     }
-    
-    setPreviewLua(generatePreviewLua(generateItemLua(itemName, itemDescription, itemCategory, itemModel, itemName, true)))
-    console.log(item)
+    setItemVars([...itemVars, newValue])
+  }
+
+  function getItemUniqueID() {
+    // make name lowercase, replace spaces with underscores
+    const uniqueID = getItemVarByName('name').value.toLowerCase().replaceAll(' ', '_')
+    return uniqueID
   }
 
   return (
@@ -65,21 +110,32 @@ function ItemGenerator() {
       <div>
       <Card bgColor={'bg-slate-800'}>
         <form onSubmit={handleItemGeneration} className='flex flex-col gap-2 px-4 py-2 w-96'>
-          <InputLabelPair text='Name' inputType={'text'} onChange={handleNameChange} />
-          <InputLabelPair text='Description' inputType={'text'} onChange={handleDescriptionChange} />
-          <InputLabelPair text='Category' inputType={'text'} onChange={handleCategoryChange} />
-          <InputLabelPair text='Model' inputType={'text'} onChange={handleModelChange} />
+          {itemVars.map((itemVar, index) => {
+            return(
+              <InputLabelPair key={index} text={itemVar.name} inputType={inputTypes[itemVar.type]} onChange={(e) => {
+                const value = itemVar.type === 'boolean' ? e.target.checked : e.target.value;
+                updateItemVar(itemVar.name, value);
+              }} />
+            )
+          })}
           <Button type='submit'>Generate</Button>
         </form>
       </Card>
       <Card bgColor={'bg-slate-800'}>
-        <form onSubmit={handleItemGeneration} className='flex flex-col gap-2 px-4 py-2'>
-          <InputLabelPair text='Variable Name' inputType={'text'} onChange={handleNameChange} />
+        <form onSubmit={handleNewItemVar} className='flex flex-col gap-2 px-4 py-2'>
+          <InputLabelPair text='Variable Name' inputType={'text'} onChange={handleNewVarNameChange} />
+          <select className='flex flex-col mb-2 mx-4' onChange={handleNewVarTypeChange}>
+            <option value="string">String</option>
+            <option value="number">Number</option>
+            <option value="boolean">Boolean</option>
+            <option value="color">Color</option>
+          </select>
           <Button type='submit'>Add</Button>
         </form>
       </Card>
       </div>
-      <h1 className='mb-0 pb-0'>File Preview : sh_item.lua</h1>
+      <h1 className='mb-0 pb-0'>File Preview : {`sh_${getItemUniqueID()}.lua`}</h1>
+      <Button onClick={handleItemDownload}>Download</Button>
       <LuaPreview>{previewLua}</LuaPreview>
     </div>
   )

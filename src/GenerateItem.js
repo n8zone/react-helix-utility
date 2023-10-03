@@ -1,11 +1,10 @@
 import React from 'react';
 
-export function generateItemLua(itemName, itemDesc, itemCategory, itemModel, itemID = 'test_item', download = false) {
+export function generateItemLua(itemVars, itemID = 'test_item', download = false) {
 
-	let lua = `ITEM.name = "${itemName}"
-  ITEM.description = "${itemDesc}"
-	ITEM.category = "${itemCategory}"
-  ITEM.model = "${itemModel}"
+	let lua = `${itemVars.map((variable) => {
+		return `ITEM.${variable.name} = ${variable.type === 'string' ? `"${variable.value}"` : variable.value}`
+	}).join('\n')}
 
 	function ITEM:GetDescription() -- Returns the description of the item
 	<lua_tab>return self.description
