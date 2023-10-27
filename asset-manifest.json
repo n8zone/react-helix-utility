@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-helix-utility/static/css/main.a7506b49.css",
+    "main.js": "/react-helix-utility/static/js/main.7df67d9a.js",
+    "index.html": "/react-helix-utility/index.html",
+    "main.a7506b49.css.map": "/react-helix-utility/static/css/main.a7506b49.css.map",
+    "main.7df67d9a.js.map": "/react-helix-utility/static/js/main.7df67d9a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a7506b49.css",
+    "static/js/main.7df67d9a.js"
+  ]
+}
