@@ -1,12 +1,11 @@
 import React from 'react';
 
-export function generateItemLua(itemVars, itemID = 'test_item', download = false) {
+export function generateItemLua(itemVars, itemID = 'test_item', download = false, includeExamples = false) {
 
 	let lua = `${itemVars.map((variable) => {
 		return `ITEM.${variable.name} = ${variable.type === 'string' ? `"${variable.value}"` : variable.value}`
 	}).join('\n')}
-
-	function ITEM:GetDescription() -- Returns the description of the item
+	${includeExamples ? `\n\nfunction ITEM:GetDescription() -- Returns the description of the item
 	<lua_tab>return self.description
 	end
 
@@ -20,7 +19,8 @@ export function generateItemLua(itemVars, itemID = 'test_item', download = false
   <lua_tab>OnCanRun = function(item) -- Returns whether or not the player can use the function
   <lua_tab><lua_tab>return true
   <lua_tab>end
-	}
+	}` : ''}
+	
   `;
 
 	lua = lua.replace(/^[ \t]+/gm, '');

@@ -13,6 +13,7 @@ import { generateItemLua, generatePreviewLua } from '../GenerateItem'
 
 function ItemGenerator() {
 
+  const [includeExamples, setIncludeExamples] = useState(false)
   const [newVarName, setNewVarName] = useState('')
   const [newVarType, setNewVarType] = useState('')
   const [itemVars, setItemVars] = useState([
@@ -55,7 +56,13 @@ function ItemGenerator() {
   }
 
   function handleItemDownload() {
-    generateItemLua(itemVars, getItemUniqueID(), true)
+    generateItemLua(itemVars, getItemUniqueID(), true, includeExamples)
+  }
+
+  function handleIncludeExamples() {
+    let newValue = !includeExamples
+    setPreviewLua(generatePreviewLua(generateItemLua(itemVars, getItemUniqueID(), false, newValue)))
+    setIncludeExamples(newValue)
   }
 
   function updateItemVar(name, value) {
@@ -118,6 +125,7 @@ function ItemGenerator() {
               }} />
             )
           })}
+          <InputLabelPair text='Include Example Functions' inputType={'checkbox'} onChange={handleIncludeExamples} />
           <Button type='submit'>Generate</Button>
         </form>
       </Card>
